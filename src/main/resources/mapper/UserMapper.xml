@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.soccer.mapper.UserMapper">
+
+    <update id="updateUserInfo">
+        update tb_user
+        <set>
+            <if test="username != null">username=#{username},</if>
+            <if test="email != null">email=#{email},</if>
+            <if test="status != null">status=#{status},</if>
+            <if test="type != null">type=#{type},</if>
+            <if test="image != null">image=#{image},</if>
+            <if test="updateTime != null">update_time=#{updateTime}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="page" resultType="com.example.soccer.pojo.User">
+        select * from tb_user
+        <where>
+            <if test="username != null and username != ''">username like concat('%',#{username},'%')</if>
+            <if test="email != null and email != ''">and email like concat('%',#{email},'%')</if>
+        </where>
+        order by update_time desc
+        limit #{start}, #{pageSize}
+    </select>
+</mapper>
