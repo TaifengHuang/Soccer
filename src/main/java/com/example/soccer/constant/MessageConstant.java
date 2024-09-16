@@ -12,6 +12,8 @@ public class MessageConstant {
     public static final String ACCOUNT_FOUND = "账号已存在，请重新输入！";
     public static final String ACCOUNT_FORMAT_ERROR = "账号格式错误，请重新输入！";
     public static final String PASSWORD_FORMAT_ERROR = "密码格式错误，请重新输入！";
+    public static final String NECESSARY_PARAMETERS_MISSING = "缺少必要的参数！";
+    public static final String PASSWORD_INCONSISTENCY = "两者密码不一致，请重新输入！！";
 
 //    public static final String USERNAME_OR_PASSWORD_ERROR = "账号或密码错误";
     public static final String ALREADY_EXISTS = "已存在";

@@ -2,10 +2,7 @@ package com.example.soccer.mapper;
 
 import com.example.soccer.pojo.User;
 import lombok.Data;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
@@ -33,4 +30,13 @@ public interface UserMapper {
     Long count();
 
     List<User> page(Integer start, Integer pageSize, String username, String email);
+
+    @Select("select * from tb_user where password = #{oldPassword} and id=#{id};")
+    User CheckOldPassword(String oldPassword,Integer id);
+
+    @Update("update tb_user set password=#{newPassword} where id=#{id}")
+    void setNewPassword(String newPassword,Integer id);
+
+    @Update("update tb_user set image=#{imageUrl} where id=#{id}")
+    void updateUserImage(String imageUrl, Integer id);
 }

@@ -8,6 +8,7 @@ import com.example.soccer.pojo.User;
 import com.example.soccer.service.UserService;
 import com.example.soccer.utils.JwtUtil;
 import com.example.soccer.utils.ThreadLocalUtil;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -66,6 +67,8 @@ public class UserController {
      */
     @PostMapping("/userInfo")
     public Result<User> queryUserById(@RequestParam Integer id){
+//        Map<String,Object> map = ThreadLocalUtil.get();
+//        Integer id=(Integer)map.get("id");
         User user = userService.queryUserById(id);
         return Result.success(user);
     }
@@ -99,9 +102,36 @@ public class UserController {
      */
     @PostMapping("/queryUserList")
     public Result<PageResult> queryUserList(@RequestBody UserPageDTO userPageDTO){
-        Map<String,Object> map = ThreadLocalUtil.get();
-        Integer id=(Integer)map.get("id");
         PageResult pageResult = userService.queryUserList(userPageDTO);
         return Result.success(pageResult);
     }
+
+    /**
+     * 修改用户密码
+     * @param map
+     * @return
+     */
+    @PostMapping("/updateUserPassword")
+    public Result<PageResult> updateUserPassword(@RequestBody Map<String,Object> map){
+        Map<String,Object> param = ThreadLocalUtil.get();
+        Integer id=(Integer)param.get("id");
+
+        userService.updateUserPassword(map,id);
+        return Result.success();
+    }
+
+    /**
+     * 修改用户头像
+     * @param imageUrl, id
+     * @return
+     */
+    @PostMapping("/updateUserImage")
+    public Result<PageResult> updateUserImage(@RequestParam @URL String imageUrl, @RequestParam Integer id){
+//        Map<String,Object> param = ThreadLocalUtil.get();
+//        Integer id=(Integer)param.get("id");
+
+        userService.updateUserImage(imageUrl,id);
+        return Result.success();
+    }
+
 }
